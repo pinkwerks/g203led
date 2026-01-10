@@ -1,0 +1,19 @@
+# PowerShell test files
+test-*.ps1
+*-test.ps1
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
+*.exe
+*.dll
+*.pdb
