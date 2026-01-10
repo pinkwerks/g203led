@@ -25,16 +25,22 @@
 
 ### Option 1: GUI (Easiest)
 ```powershell
+# Clone or download the repo, then navigate to it
+cd path\to\g203led
+
 # Import and launch the GUI
-Import-Module C:\work\g203led\G20LED.psd1
+Import-Module .\G20LED.psd1
 Show-G203GUI
 ```
 Visual interface with color picker, preset buttons, effects, and live preview!
 
 ### Option 2: CLI Commands
 ```powershell
+# Navigate to the module directory
+cd path\to\g203led
+
 # Import the module
-Import-Module C:\work\g203led\G20LED.psd1
+Import-Module .\G20LED.psd1
 
 # Connect and control
 Connect-G203Mouse
@@ -77,8 +83,8 @@ Disconnect-G203Mouse
 
 **Option A: Import Directly (Easiest)**
 ```powershell
-# Navigate to the module directory
-cd C:\work\g203led
+# Navigate to where you cloned/downloaded the repo
+cd path\to\g203led
 
 # Import the module
 Import-Module .\G20LED.psd1
@@ -90,9 +96,10 @@ Connect-G203Mouse
 **Option B: Install Permanently**
 ```powershell
 # Copy module to your PowerShell modules folder
+$source = Get-Location  # Current directory (where you cloned the repo)
 $dest = "$env:USERPROFILE\Documents\PowerShell\Modules\G20LED"
 New-Item -ItemType Directory -Path $dest -Force
-Copy-Item -Recurse C:\work\g203led\* -Destination $dest -Exclude .git
+Copy-Item -Recurse "$source\*" -Destination $dest -Exclude .git
 
 # Import (will be available in future sessions)
 Import-Module G20LED
@@ -187,7 +194,9 @@ By default, Windows requires admin for USB device access. But you can do a **one
 **1. Run This ONCE as Administrator:**
 ```powershell
 # Open PowerShell AS ADMIN (just this once)
-cd C:\work\g203led
+# Navigate to where you cloned the repo
+cd path\to\g203led
+
 Import-Module .\G20LED.psd1
 
 # Grant yourself permanent access
@@ -198,19 +207,16 @@ Grant-HIDDeviceAccess
 
 **2. Unplug and Replug Your Mouse**
 
-**3. Test It Works (No Admin!):**
+**3. Test and Use Without Admin:**
 ```powershell
-# Close admin PowerShell
-# Open NEW PowerShell (normal user)
-cd C:\work\g203led
-.\Tools\Test-NonAdminAccess.ps1
+# Close admin PowerShell, open normal PowerShell
+cd path\to\g203led
+Import-Module .\G20LED.psd1
 
-# Output: [SUCCESS] Device accessible without admin!
-```
+# Test if it works
+Test-NonAdminAccess
 
-**4. Use Anytime Without Admin:**
-```powershell
-Import-Module C:\work\g203led\G20LED.psd1
+# Use normally without admin!
 Connect-G203Mouse
 Set-G203Color "Purple"
 # Works! No UAC prompt!
@@ -234,10 +240,6 @@ Set-G203Color "Purple"
 ```powershell
 Revoke-HIDDeviceAccess
 ```
-
-### Alternative: Task Scheduler for Automation
-
-See `QUICK-START-NON-ADMIN.md` for advanced options.
 
 ---
 
@@ -419,7 +421,7 @@ Then just type `led-red` or `led-rainbow` in any PowerShell session!
 **Better Solution**: Enable non-admin access (one-time setup)
 ```powershell
 # 1. Run PowerShell AS ADMINISTRATOR (one time)
-Import-Module C:\work\g203led\G20LED.psd1
+Import-Module path\to\g203led\G20LED.psd1
 Grant-HIDDeviceAccess
 
 # 2. Unplug and replug your G203 mouse
@@ -460,7 +462,7 @@ One-time administrator setup that grants your user account permanent access to t
 ```powershell
 # 1. Ensure G203 mouse is plugged in
 # 2. Open PowerShell AS ADMINISTRATOR (one time only)
-Import-Module C:\work\g203led\G20LED.psd1
+Import-Module path\to\g203led\G20LED.psd1
 
 # 3. Grant your user access to the device
 Grant-HIDDeviceAccess
@@ -502,23 +504,7 @@ Start-ScheduledTask -TaskName "G203-Red"
 
 Simply always run PowerShell as administrator. This is the most reliable method.
 
-### Learn More
-
-For complete research, implementation details, and all options:
-
-```powershell
-# View comprehensive setup guide
-Show-NonAdminSetupGuide
-
-# Read full research report
-Get-Content C:\work\g203led\NON-ADMIN-ACCESS-RESEARCH.md
-
-# Test if non-admin access works
-Test-NonAdminAccess
-```
-
-**Research Summary:**
-After investigating 8 different approaches (registry ACLs, WinUSB drivers, UWP APIs, Windows Services, etc.), we found that Windows fundamentally requires admin privileges for HID device write access. However, a one-time admin setup can grant persistent non-admin access. See `NON-ADMIN-ACCESS-RESEARCH.md` for the complete 30+ page research report with all findings, limitations, and security considerations.
+**Note:** Windows fundamentally requires admin privileges for HID device write access. The Grant-HIDDeviceAccess function modifies registry permissions to grant your user account persistent access without requiring admin each time.
 
 ---
 
