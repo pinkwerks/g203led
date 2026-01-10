@@ -51,9 +51,11 @@ Disconnect-G203Mouse
 
 ✅ **Fully Working** - All commands tested and confirmed functional
 
-- **Solid Colors**: Hex codes (#FF0000), RGB values, or 17 named colors
-- **Brightness Control**: 0-100%
-- **Effects**: Breathe (pulsing), Cycle (rainbow)
+- **WPF GUI**: Color picker with RGB/HSV sliders, 21 preset buttons, live preview
+- **CLI Commands**: 8 PowerShell cmdlets for scripting and automation
+- **Solid Colors**: Hex codes (#FF0000), RGB values, or 21 named colors
+- **Brightness Control**: 0-100% hardware dimming
+- **Effects**: Fixed, Breathe (pulsing), Cycle (rainbow)
 - **Built-in Help**: `Show-G203Help` for quick reference
 - **No Dependencies**: Pure PowerShell using Windows HID API
 - **No Logitech Software**: Direct USB control via DeviceIOControl
@@ -148,48 +150,24 @@ Set-G203Brightness 50
 Disconnect-G203Mouse
 ```
 
-### Presets
-```powershell
-# List available presets
-Get-G203Preset
-
-# Apply preset
-Connect-G203Mouse
-Set-G203Preset "gaming-red"
-Disconnect-G203Mouse
-
-# Save custom preset
-Save-G203Preset -Name "my-purple" -DisplayName "Purple Pulse" `
-    -Effect Breathe -Color "#8000FF" -Speed 2000 -Brightness 90
-```
-
 ## 📖 Commands Reference
 
 | Command | Description | Example |
 |---------|-------------|---------|
+| `Show-G203GUI` | Launch WPF GUI | `Show-G203GUI` |
 | `Connect-G203Mouse` | Connect to G203 | `Connect-G203Mouse` |
 | `Disconnect-G203Mouse` | Disconnect | `Disconnect-G203Mouse` |
 | `Set-G203Color` | Set solid color | `Set-G203Color "Red"` |
 | `Set-G203Brightness` | Set brightness (0-100%) | `Set-G203Brightness 75` |
 | `Set-G203Effect` | Apply effect | `Set-G203Effect Breathe -Color "#FF0000"` |
 | `Get-G203Info` | Device information | `Get-G203Info` |
-| `Get-G203Preset` | List presets | `Get-G203Preset` |
-| `Set-G203Preset` | Apply preset | `Set-G203Preset "rainbow"` |
-| `Save-G203Preset` | Save preset | `Save-G203Preset -Name "my-preset" ...` |
-| `Remove-G203Preset` | Delete preset | `Remove-G203Preset "my-preset"` |
+| `Show-G203Help` | Built-in help | `Show-G203Help` |
 
 ### Get Detailed Help
 ```powershell
 Get-Help Connect-G203Mouse -Full
 Get-Help Set-G203Color -Examples
 ```
-
-## 🎨 Available Colors
-
-**Basic**: Black, White, Red, Green, Blue, Yellow, Cyan, Magenta
-**Extended**: Orange, Purple, Pink, Lime, Teal, Navy, Maroon, Gray, Silver, Gold, Brown, Violet, Indigo
-
-Or use any hex color: `#RRGGBB`
 
 ## ⚙️ Device Information
 
@@ -380,18 +358,16 @@ g203led/
 │   ├── Protocol.ps1           # G203 protocol commands
 │   └── ColorHelpers.ps1       # Color parsing utilities
 ├── Public/
+│   ├── Show-G203GUI.ps1       # WPF GUI launcher
 │   ├── Connect-G203Mouse.ps1  # Device connection
+│   ├── Disconnect-G203Mouse.ps1 # Disconnect
 │   ├── Set-G203Color.ps1      # Color control
 │   ├── Set-G203Brightness.ps1 # Brightness control
 │   ├── Set-G203Effect.ps1     # Lighting effects
 │   ├── Get-G203Info.ps1       # Device information
-│   ├── Save-G203Preset.ps1    # Save presets
-│   └── Load-G203Preset.ps1    # Load presets
-├── Config/
-│   └── Presets.json           # Default presets
+│   └── Show-G203Help.ps1      # Built-in help
 ├── Tools/
-│   ├── Find-LogitechDevices.ps1  # Device enumeration
-│   └── Test-USBConnection.ps1    # Connection testing
+│   └── Find-LogitechDevices.ps1  # Device enumeration
 └── README.md
 ```
 
@@ -552,19 +528,15 @@ After investigating 8 different approaches (registry ACLs, WinUSB drivers, UWP A
 
 - ✅ Device enumeration
 - ✅ USB HID communication (DeviceIOControl)
+- ✅ WPF GUI with RGB/HSV color pickers
+- ✅ CLI command display and clipboard copy
 - ✅ Protocol command builders
-- ✅ Color control cmdlets
-- ✅ Effect control cmdlets
-- ✅ Brightness control
-- ✅ Preset management
+- ✅ Color control cmdlets (21 named colors + hex + RGB)
+- ✅ Effect control cmdlets (Fixed, Breathe, Cycle)
+- ✅ Brightness control (hardware dimming)
 - ✅ Module packaging
 - ✅ Complete documentation
-- ✅ **Non-admin access solutions** (NEW!)
-- ✅ **Comprehensive research report** (NEW!)
-- ✅ **Permission modification tools** (NEW!)
-- ✅ **Task scheduler integration** (NEW!)
-- ⏳ Pester tests (in progress)
-- ⏳ WPF GUI (future enhancement)
+- ✅ Non-admin access solutions
 
 ## License
 
