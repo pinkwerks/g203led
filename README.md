@@ -1,4 +1,4 @@
-# G20LED - Logitech G203 LIGHTSYNC LED Mouse Controller
+# G20LED - Logitech G203 LIGHTSYNC Mouse LED Controller
 ## Pure PowerShell Module for Windows
 
 ✨ Control your Logitech G203 LIGHTSYNC mouse LEDs with simple PowerShell commands
